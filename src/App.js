@@ -1,78 +1,119 @@
-import React from 'react';
+import React, { Component } from "react";
 import {
-  Form,
-  Select,
-  InputNumber,
-  DatePicker,
-  Switch,
-  Slider,
+  Card,
+  Col,
+  Row,
+  Input,
   Button,
-  Rate,
-  Typography,
-  Space,
-  Divider,
-} from 'antd';
-import './App.less';
+  PageHeader,
+  message,
+  Modal,
+} from "antd";
+import { LogoutOutlined } from "@ant-design/icons";
+import "./App.less";
 
-const { Option } = Select;
-const { Title } = Typography;
+//class part state they holds the data this page
+class App extends Component {
+  state = {
+    status: 0,
+    Name: "",
+    Email: "",
+    Mobile: "",
+    Country: "",
+    City: "",
+    State: "",
+    Message: "",
+  };
 
-const App = () => (
-  <>
-    <section style={{ textAlign: 'center', marginTop: 48, marginBottom: 40 }}>
-      <Space align="start">
-        <img
-          style={{width: 40, height: 40 }}
-          src="https://gw.alipayobjects.com/zos/rmsportal/KDpgvguMpGfqaHPjicRK.svg"
-          alt="Ant Design"
-        />
-        <Title level={2} style={{ marginBottom: 0 }}>
-          Ant Design
-        </Title>
-      </Space>
-    </section>
-    <Divider style={{ marginBottom: 60 }}>Form</Divider>
-    <Form labelCol={{ span: 8 }} wrapperCol={{ span: 8 }}>
-      <Form.Item label="数字输入框">
-        <InputNumber min={1} max={10} defaultValue={3} />
-        <span className="ant-form-text"> 台机器</span>
-        <a href="https://ant.design">链接文字</a>
-      </Form.Item>
-      <Form.Item label="开关">
-        <Switch defaultChecked />
-      </Form.Item>
-      <Form.Item label="滑动输入条">
-        <Slider defaultValue={70} />
-      </Form.Item>
-      <Form.Item label="选择器">
-        <Select defaultValue="lucy" style={{ width: 192 }}>
-          <Option value="jack">jack</Option>
-          <Option value="lucy">lucy</Option>
-          <Option value="disabled" disabled>disabled</Option>
-          <Option value="yiminghe">yiminghe</Option>
-        </Select>
-      </Form.Item>
-      <Form.Item label="日期选择框">
-        <DatePicker />
-      </Form.Item>
-      <Form.Item label="日期范围选择框">
-        <DatePicker.RangePicker />
-      </Form.Item>
-      <Form.Item label="评分">
-        <Rate defaultValue={5} />
-      </Form.Item>
-      <Form.Item wrapperCol={{ span: 8, offset: 8 }}>
-        <Space>
-          <Button type="primary" htmlType="submit">
-            Submit
-          </Button>
-          <Button>
-            Cancel
-          </Button>
-        </Space>
-      </Form.Item>
-    </Form>
-  </>
-);
+  onChangeInputBox1 = (e) => {
+    this.setState({ Name: e.target.value });
+  };
+
+  onChangeInputBox2 = (e) => {
+    this.setState({ Email: e.target.value });
+  };
+
+  onChangeInputBox3 = (e) => {
+    this.setState({ Mobile: e.target.value });
+  };
+
+  onChangeInputBox4 = (e) => {
+    this.setState({ Country: e.target.value });
+  };
+
+  onChangeInputBox5 = (e) => {
+    this.setState({ City: e.target.value });
+  };
+
+  onChangeInputBox6 = (e) => {
+    this.setState({ State: e.target.value });
+  };
+
+  onChangeInputBox7 = (e) => {
+    this.setState({ Message: e.target.value });
+  };
+
+  login = () => {
+    let flag = 0;
+    const regex_pattern =
+      /^(([^<>()[\]\\.,;:\s@\"]+(\.[^<>()[\]\\.,;:\s@\"]+)*)|(\".+\"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
+
+    if (this.state.Name === "") {
+      message.error("Please Enter Name");
+      flag = 1;
+      return false;
+    }
+    if (regex_pattern.test(this.state.Email)) {
+      console.log("The email address is valid");
+    } else {
+      console.log("The email address is not valid");
+      message.error("The email address is not valid");
+
+      return false;
+      flag = 1;
+    }
+
+    console.log(this.state);
+  };
+
+  render() {
+    return (
+      <div>
+        <PageHeader className="site-page-header" title="Register Form" />
+        <Card style={{ width: "100%", marginTop: "10%" }} bordered type="inner">
+          <Row gutter={[16, 16]} align="middle">
+            <Col span={10}>
+              <Input placeholder="Name" onChange={this.onChangeInputBox1} />
+            </Col>
+            <Col span={10}>
+              <Input placeholder="Email" onChange={this.onChangeInputBox2} />
+            </Col>
+            <Col span={10}>
+              <Input placeholder="Mobile" onChange={this.onChangeInputBox3} />
+            </Col>
+            <Col span={10}>
+              <Input placeholder="Country" onChange={this.onChangeInputBox4} />
+            </Col>
+            <Col span={10}>
+              <Input placeholder="City" onChange={this.onChangeInputBox5} />
+            </Col>
+            <Col span={10}>
+              <Input placeholder="State" onChange={this.onChangeInputBox6} />
+            </Col>
+            <Col span={10}>
+              <Input placeholder="Message" onChange={this.onChangeInputBox7} />
+            </Col>
+
+            <Col span={8}>
+              <Button type="primary" onClick={this.login}>
+                Submit
+              </Button>
+            </Col>
+          </Row>
+        </Card>
+      </div>
+    );
+  }
+}
 
 export default App;
